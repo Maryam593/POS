@@ -1,44 +1,52 @@
- let Key = process.env.secret_key
- import jwt from 'jsonwebtoken'
-import TokenModel from '../models/Token/index.js';
- const AuthenticationMiddleWare = async(req,res,next) =>{
 
-   try {
-    let token = req.headers.Authorization; 
-    if(!token){
-      return res.status(401).json({Warning: "Unauthorized Access"})
-    }
-    console.log(token,'token');
-    //replace token initials
-     token = token.replace("Bearer", "");
 
-     //find token 
-     const findToken = await TokenModel.findOne({
-        where : {
-            token:token
-        }
-     })
-     if(!findToken){
-        return res.status(400).json({Warning: "Unauthorized access"})
-     }
-
-     //intergrity of the server 
-
+import jwt from "jsonwebtoken"
+import TokenModel from "../models/Token/index.js";
+let key = process.env.secret_key;
+const userAuthMiddleWare = async(req,res,next) =>{
+   
     try {
-        let decoded = jwt.verify(token,Key);
-        console.log(decoded);
-        req.user = decoded;
-        res.status(200).json({message: "Authorized", Required_Information: decoded})
-    } catch (error) {
-        res.status(500).json({Warning: "Unauthorized Access"})
+        let token = req.headers.authorization;
+        if(!token){
+            return res.status(400).json({data: "UnAuthorized Access"})
+        }
+        console.log(token,'token');
+          //trim token initials 
+    
+      token = token.replace("Bearer ", "");
+      //   await TokenModel.create({
+      //     token,
+      //  })
+      const findToken=await TokenModel.findOne({
+        where:{
+          //jwt token : header/body
+          token:token,
+        }
+       })
+       if(!findToken){
+        return res.status(401).json({message: "Unauthorized Access"})
     }
-   } catch (error) {
-    res.status(500).json({Error : "Internal server Error"})
-   }
+       console.log(token,'token')
+       //integrity of server
+       try {
+        const decoded = jwt.verify(token,key);
+        req.user=decoded
+  
+        return res.status(200).json({
+          message:"User Authorized.",
+          decoded
+        })
+    }
+        catch(error){
+            console.log(error)
+            return res.status(401).json({message: "Unauthorized"})
+        }
+       
+    } catch (error) {
+        res.status(500).json({message: "Internal server error"})
+    }
 
+    next();
+}
 
-    next()
- }
-
-
- export default AuthenticationMiddleWare;
+export default userAuthMiddleWare;

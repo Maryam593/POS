@@ -3,6 +3,7 @@ import { compare, hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 //import TokenModel from "../model/token/index.js";
 import UserAuthenticationModel from "../../models/userAdmin/index.js";
+import TokenModel from "../../models/Token/index.js";
 let key = process.env.secret_key;
 const userAuthenticationController = {
 
@@ -20,7 +21,7 @@ const userAuthenticationController = {
           //hashing ... SHA 256
             const hPassword = await hash(payload.password, 10);
 
-            const data = await UserModel.create ({
+            const data = await UserAuthenticationModel.create ({
                 ...payload,
                 password : hPassword
             })
