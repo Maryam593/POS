@@ -62,9 +62,9 @@ const userAuthenticationController = {
             const token = jwt.sign(tokenData,key,{
                 expiresIn : "2hr"
             });
-          //  await TokenModel.create({
-          //       token,
-          //   })
+           await TokenModel.create({
+                token,
+            })
             console.log(token);
             res.status(200).json({Information: tokenData,token});
         } catch (error) {
