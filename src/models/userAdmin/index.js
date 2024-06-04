@@ -13,13 +13,14 @@ const UserAuthenticationModel = sequelize.define(
       type: DataTypes.STRING,
       // allowNull defaults to true
       unique : true,
+      validate: {
+        isEmail : true,
+      }
     },
     password:
     {
-        type: DataTypes.INTEGER,
-        validate : {
-            len : [4-16]
-        }
+        type: DataTypes.STRING, 
+        
     },
   },
   {
