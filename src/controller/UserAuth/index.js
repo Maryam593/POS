@@ -66,7 +66,7 @@ const userAuthenticationController = {
           //       token,
           //   })
             console.log(token);
-            res.status(200).json({data: tokenData,token});
+            res.status(200).json({Information: tokenData,token});
         } catch (error) {
             console.log(error)
             res.status(500).json({message: "Internal server error"})  
