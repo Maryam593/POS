@@ -34,6 +34,7 @@ const productController = {
             const createProducts = new ProductModel();
             createProducts.name = payload.name;
             createProducts.stock = payload.stock;
+            createProducts.rate = payload.rate;
             await createProducts.save();
             if(!createProducts){
                 return res.status(404).json({message: "Not Found"})

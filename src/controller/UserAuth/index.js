@@ -61,7 +61,7 @@ const userAuthenticationController = {
 
             //jwt 
             const token = jwt.sign(tokenData,key,{
-                expiresIn : "2hr"
+                // expiresIn : "2hr"
             });
            await TokenModel.create({
                 token,

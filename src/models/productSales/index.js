@@ -1,6 +1,8 @@
 import { DataTypes } from 'sequelize';
 //const sequelize = new Sequelize('sqlite::memory:');
 import sequelize from '../../db/config.js';
+import SalesModel from '../sales/index.js';
+import ProductModel from '../products/index.js';
 const ProductSalesModel = sequelize.define(
   'ProductSales',
   {
@@ -31,3 +33,9 @@ const ProductSalesModel = sequelize.define(
 //console.log(User === sequelize.models.User); // true
 
 export default ProductSalesModel;
+
+SalesModel.hasMany(ProductSalesModel);
+ProductSalesModel.belongsTo(SalesModel);
+
+ProductModel.hasMany(ProductSalesModel);
+ProductSalesModel.belongsTo(ProductModel);
