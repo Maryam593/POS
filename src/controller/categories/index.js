@@ -5,8 +5,8 @@ const categroyController = {
     getAll : async (req,res) => {
 
         try {
-            const getAll = await CategoryModel.findAll();
-            res.status(200).json({message:"Find All", getAllCategories: getAll})
+            const getAllCategories = await CategoryModel.findAll();
+            res.status(200).json({message:"Find All", getAllCategories: getAllCategories})
         } catch (error) {
             res.status(500).json({message:"Internal server error"})
         }

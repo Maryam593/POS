@@ -1,11 +1,18 @@
 //import ProductModel from "../../models/products/index.js";
-
+import CategoryModel from "../../models/Categories/index.js";
 import ProductModel from "../../models/products/index.js";
 
 const productController = {
     getAll : async (req,res) => {
         try {
-            const findAll = await ProductModel.findAll();
+            const findAll = await ProductModel.findAll({
+                include : [
+                   {
+                    model : CategoryModel,
+                    attributes : ['name']
+                   }
+                ]
+            });
             res.status(200).json({message:"Find All", AllProducts: findAll})
         } catch (error) {
             console.log(error)
@@ -30,12 +37,21 @@ const productController = {
 
     Create : async (req,res) => {
         try {
-            const payload = req.body; 
-            const createProducts = new ProductModel();
-            createProducts.name = payload.name;
-            createProducts.stock = payload.stock;
-            createProducts.rate = payload.rate;
-            await createProducts.save();
+            const payload = req.body;
+             
+            // const createProducts = new ProductModel();
+            // createProducts.name = payload.name;
+            // createProducts.stock = payload.stock;
+            // createProducts.rate = payload.rate;
+            // await createProducts.save();
+
+
+            //--------for adding category in create 
+            const createProducts = ProductModel.create({
+                ...payload,
+                category
+            })
+            await ProductModel.addCategory(category);
             if(!createProducts){
                 return res.status(404).json({message: "Not Found"})
             }
