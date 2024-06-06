@@ -55,15 +55,18 @@ const validation =  {
             //schema building 
             const schema = Joi.object({
             // for color 
-            color : Joi.string(),
-            //for brand name 
-            Brand : Joi.string()
-            .min(3)
-            .max(15),
-            //shoe size number 
-            size: Joi. number()
+            // color : Joi.string(),
+            // //for brand name 
+            // Brand : Joi.string()
+            // .min(3)
+            // .max(15),
+            // //shoe size number 
+            // size: Joi. number()
+            // .min(5)
+            // .max(40),
+            name : Joi.string()
             .min(5)
-            .max(40)
+            .max(30)
             })
 
             //validating a schema 
@@ -77,33 +80,33 @@ const validation =  {
             }
             next()
           },
-          product : (req,res,next) => {
-            //schema building 
-            const schema = Joi.object({
+        //   product : (req,res,next) => {
+        //     //schema building 
+        //     const schema = Joi.object({
               
-                //for name 
-                name : Joi.string()
-                .min(5)
-                .max(25),
-                //shoe size number 
-                stock: Joi. number(),
-                // .min(5)
-                // .max(14)
-                rate : Joi.number(),
+        //         //for name 
+        //         name : Joi.string()
+        //         .min(5)
+        //         .max(25),
+        //         //shoe size number 
+        //         stock: Joi. number(),
+        //         // .min(5)
+        //         // .max(14)
+        //         rate : Joi.number(),
                 
-                })
+        //         })
     
-                //validating a schema 
-                const {value,error} = schema.validate(req.body, {
+        //         //validating a schema 
+        //         const {value,error} = schema.validate(req.body, {
     
-                })
-                if(error) {
-                    return res.status(400).json({
-                        message: "Invalid Data", error
-                    })
-                }
-                next();
-          },
+        //         })
+        //         if(error) {
+        //             return res.status(400).json({
+        //                 message: "Invalid Data", error
+        //             })
+        //         }
+        //         next();
+         // },
           productSales : (req,res,next) => {
             const scehma = Joi.object({
                 quantity : Joi.string(),
@@ -124,4 +127,4 @@ const validation =  {
     
 }
 
-export default validation
+export default validation;

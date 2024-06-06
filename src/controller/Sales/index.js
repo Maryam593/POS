@@ -1,3 +1,5 @@
+import ProductSalesModel from "../../models/productSales/index.js";
+import ProductModel from "../../models/products/index.js";
 import SalesModel from "../../models/sales/index.js";
 
 
@@ -14,7 +16,13 @@ const salesController = {
     getSingle : async (req,res) => {
         try {
             const {id} = req.params;
-            const getSingle = await SalesModel.findByPk(id);
+            const getSingle = await SalesModel.findByPk(id,{
+
+                //incude all data here!
+                include : [{
+                    model : ProductSalesModel, include : [ProductModel]
+                }]
+            });
             if(!getSingle) {
                 return res.status(404).json({AllSales : "Not found"})
             }

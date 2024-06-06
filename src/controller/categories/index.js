@@ -32,9 +32,10 @@ const categroyController = {
         try {
             const payload = req.body; 
            const  createCategory = new CategoryModel;
-            createCategory.color = payload.color;
-            createCategory.size = payload.size;
-            createCategory.Brand = payload.Brand;
+            // createCategory.color = payload.color;
+            // createCategory.size = payload.size;
+            // createCategory.Brand = payload.Brand;
+            createCategory.name = payload.name
             await createCategory.save();
             if(!createCategory) {
                 res.status(404).json({message: "Not found"})

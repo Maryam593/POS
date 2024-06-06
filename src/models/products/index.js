@@ -33,4 +33,4 @@ const ProductModel = sequelize.define(
 export default ProductModel;
 
 ProductModel.belongsToMany(CategoryModel,{through: "categoryProudct"})
-CategoryModel.belongsToMany(ProductModel,{through: "categoryProduct" })
+//CategoryModel.belongsToMany(ProductModel,{through: "categoryProduct" })

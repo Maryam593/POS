@@ -26,8 +26,9 @@ const productSalesController = {
     Create : async (req,res) => {
         try {
             const payload = req.body; 
+            console.log(payload);
             const createProducts = new ProductSalesModel();
-            createProducts.qunatity = payload.qunatity;
+            createProducts.quantity = payload.quantity;
             createProducts.price = payload.price;
             await createProducts.save();
             if(createProducts == -1){
