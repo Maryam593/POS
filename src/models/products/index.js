@@ -8,7 +8,7 @@ const ProductModel = sequelize.define(
     // Model attributes are defined here
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
     },
     stock: {
       type: DataTypes.STRING,
@@ -33,4 +33,4 @@ const ProductModel = sequelize.define(
 export default ProductModel;
 
 ProductModel.belongsToMany(CategoryModel,{through: "categoryProudct"})
-//CategoryModel.belongsToMany(ProductModel,{through: "categoryProduct" })
+CategoryModel.belongsToMany(ProductModel,{through: "categoryProduct" })

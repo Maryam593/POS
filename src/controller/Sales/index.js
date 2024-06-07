@@ -86,6 +86,7 @@ const salesController = {
 
     }
         catch(error) {
+            console.log(error)
         res.status(500).json({Error: "Internal Server Error"})
         }
     },

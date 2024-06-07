@@ -37,29 +37,38 @@ const productController = {
 
     Create : async (req,res) => {
         try {
-            const payload = req.body;
-             
-            // const createProducts = new ProductModel();
-            // createProducts.name = payload.name;
-            // createProducts.stock = payload.stock;
-            // createProducts.rate = payload.rate;
-            // await createProducts.save();
+      //PROBLEM: Data is not showing in PivotTable
+      //SOLUTION: data is linked with model but not with controllers
 
+      //*********************-----**********************
+      //*********************STEPS**********************
+      //*********************-----**********************
 
-            //--------for adding category in create 
-            const createProducts = ProductModel.create({
-                ...payload,
-                category
-            })
-            await ProductModel.addCategory(category);
-            if(!createProducts){
-                return res.status(404).json({message: "Not Found"})
-            }
-            res.status(200).json({message:"Created Successfully", products : createProducts})
-        } catch (error) {
-            console.log(error)
-            res.status(500).json({message:"Internal server error"})
-        }
+        //1. destructring to collect all data
+        //to save from anykind of reference error.. its preferable to use DESTRUCTRING
+        let { category, name, stock, rate } = req.body;
+      //2. save product Data in a new variable
+    const productData = { name, stock, rate };
+    //3. create a new product/Array
+    const newProduct = await ProductModel.create(productData);
+
+    //4. find Category
+    if (category && category.length > 0) {
+        //fetch the category from category model
+      const categories = await CategoryModel.findAll({
+        where: { id: category },
+      });
+    //5. creating category in product mode;
+      if (categories.length > 0) {
+        await newProduct.addCategories(categories);
+      }
+    }
+
+    res.status(200).json({ message: "Created Successfully", product: newProduct });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
     },
     Update : async (req,res) => {
         try {

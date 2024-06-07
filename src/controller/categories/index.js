@@ -31,17 +31,17 @@ const categroyController = {
     Create : async (req,res) => {
         try {
             const payload = req.body; 
-           const  createCategory = new CategoryModel;
+           const  category = new CategoryModel;
             // createCategory.color = payload.color;
             // createCategory.size = payload.size;
             // createCategory.Brand = payload.Brand;
-            createCategory.name = payload.name
-            await createCategory.save();
-            if(!createCategory) {
+            category.name = payload.name
+            await category.save();
+            if(!category) {
                 res.status(404).json({message: "Not found"})
             }
 
-            res.status(200).json({message: "Created!", category : createCategory})
+            res.status(200).json({message: "Created!", category : category})
         } catch (error) {
             console.log(error)
             res.status(500).json({message:"Internal server error"})
