@@ -53,6 +53,7 @@ const productController = {
     const newProduct = await ProductModel.create(productData);
 
     //4. find Category
+    //meaning: 
     if (category && category.length > 0) {
         //fetch the category from category model
       const categories = await CategoryModel.findAll({
