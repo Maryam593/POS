@@ -9,7 +9,8 @@ const productController = {
                 include : [
                    {
                     model : CategoryModel,
-                    attributes : ['name']
+                   // attributes : ['name']
+                   //attribute is use to filter out!!
                    }
                 ]
             });
@@ -47,11 +48,13 @@ const productController = {
         //1. destructring to collect all data
         //to save from anykind of reference error.. its preferable to use DESTRUCTRING
         let { category, name, stock, rate } = req.body;
+        console.log(req.body,"payload");
       //2. save product Data in a new variable
     const productData = { name, stock, rate };
     //3. create a new product/Array
     const newProduct = await ProductModel.create(productData);
-
+    //6. save the data 
+    await newProduct.save();
     //4. find Category
     //meaning: 
     if (category && category.length > 0) {
@@ -59,12 +62,17 @@ const productController = {
       const categories = await CategoryModel.findAll({
         where: { id: category },
       });
+     
     //5. creating category in product mode;
       if (categories.length > 0) {
         await newProduct.addCategories(categories);
       }
     }
-
+    else{
+        res.status(400).json({
+            Warning: `category on this id ${id} is not found`
+        })
+    }
     res.status(200).json({ message: "Created Successfully", product: newProduct });
   } catch (error) {
     console.log(error);

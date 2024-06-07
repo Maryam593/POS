@@ -1,13 +1,14 @@
 import { Router } from "express";
 import salesController from "../../controller/Sales/index.js";
+import validation from "../../validation/index.js";
 
 
 const salesRouter = Router();
 
-salesRouter.get("/AllSales",salesController.getAll);
-salesRouter.get("/Sales/:id", salesController.getSingle);
-salesRouter.post("/CreateSales", salesController.Create);
-salesRouter.put("/UpdateSales/:id",salesController.Update);
-salesRouter.delete("/DropSales/:id", salesController.Delete);
+salesRouter.get("/AllSales",validation.Sales,salesController.getAll);
+salesRouter.get("/Sales/:id",validation.Sales, salesController.getSingle);
+salesRouter.post("/CreateSales",validation.Sales, salesController.Create);
+salesRouter.put("/UpdateSales/:id",validation.Sales,salesController.Update);
+salesRouter.delete("/DropSales/:id",validation.Sales, salesController.Delete);
 
 export default salesRouter;

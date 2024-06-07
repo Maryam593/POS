@@ -88,6 +88,47 @@ const validation =  {
                 })
             }
             next();
+          },
+
+          product : (req,res,next) => {
+            const scehma = Joi.object({
+                rate : Joi.string(),
+                stock : Joi.string(),
+                name : Joi.string()
+                .min(5)
+                .max(20),
+
+            })
+            //validating a schema 
+            const {value,error} = scehma.validate(req.body,{
+
+            })
+            if(error){
+                return res.status(404).json({
+                    message:"Invalid Data",error
+                })
+            }
+            next();
+          },
+
+          Sales : (req,res,next) => {
+            const scehma = Joi.object({
+               
+                totalAmount : Joi.number()
+                .min(5)
+                .max(20),
+
+            })
+            //validating a schema 
+            const {value,error} = scehma.validate(req.body,{
+
+            })
+            if(error){
+                return res.status(404).json({
+                    message:"Invalid Data",error
+                })
+            }
+            next();
           }
     
 }
