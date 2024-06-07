@@ -53,8 +53,8 @@ const productController = {
     const productData = { name, stock, rate };
     //3. create a new product/Array
     const newProduct = await ProductModel.create(productData);
-    //6. save the data 
-    await newProduct.save();
+    //6. save the data (optional)
+    //await newProduct.save();
     //4. find Category
     //meaning: 
     if (category && category.length > 0) {

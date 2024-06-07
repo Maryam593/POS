@@ -114,9 +114,8 @@ const validation =  {
           Sales : (req,res,next) => {
             const scehma = Joi.object({
                
-                totalAmount : Joi.number()
-                .min(5)
-                .max(20),
+                totalAmount : Joi.number(),
+               
 
             })
             //validating a schema 

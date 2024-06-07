@@ -9,7 +9,7 @@ const productSalesRouter = Router();
 productSalesRouter.get("/ProductSales",validation.productSales,userAuthMiddleWare,productSalesController.getAll)
 productRouter.get("/productSales/:id",validation.productSales, productSalesController.getSingle);
 
-productRouter.post("/CreateProductSales",validation.productSales,productSalesController.Create);
+productRouter.post("/CreateProductSales",productSalesController.Create);
 
 productRouter.put("/UpdateProductSales/:id",validation.productSales,productSalesController.Update);
 

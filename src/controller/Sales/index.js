@@ -34,27 +34,33 @@ const salesController = {
     },
 
     Create : async (req,res) => {
-        try {
+      /*  try {
           
         //*********  calculating total sale
         
         //1. collecting all data 
-        const payload = req.body;
+        // const payload = req.body;
         
         //since all the working happens or fetching of data is in product sale.. we'll do: 
 
-        const ProductSales = payload.ProductSales;
+        // let ProductSales = payload.ProductSales;
+       
+         let {ProductSales} = req.body;
         //2. calcuating total amount 
 
         let totalAmount = 0; //sales total amount cant be null
 
         //creating an empty array to store calculates data 
 
-        let salesproductData = [];
+        const salesproductData = [];
         //where main ID comes from -> Products 
-
+        //checking wether the salesProductData is an array or not 
+        if (!Array.isArray(ProductSales)) {
+           ProductSales = [ProductSales]
+          }
+       
     for (const item of ProductSales) {
-        const product = await ProductModel.findByPk(item.name); //finding ID so we can work on it 
+        const product = await ProductModel.findByPk(item.id); //finding ID so we can work on it 
 
         if (!product) {
             return res.status(400).json({warning : `product on this ID is not found ${product.productId}`})
@@ -79,17 +85,72 @@ const salesController = {
     //6. Push the whole data in to that empty array 
     salesproductData.push({
         ...item,
-        Sales : Sales.id //assigning ID to sale
+        Sales : Sales.id //assigning saleID
     });
-
+   console.log("All Data", salesproductData);
     //7. 
 
+      // Bulk create sales product records
+      await ProductSalesModel.bulkCreate(salesproductData);
+
+      res.status(200).json({ message: "Sale created successfully",salesproductData });
+    
     }
         catch(error) {
             console.log(error)
         res.status(500).json({Error: "Internal Server Error"})
         }
+    }, */
+    try {
+        const payload = req.body;
+        const sale = await SalesModel.create({ totalAmount: 0 }); // Save sale first to generate id
+        const salesProduct = [];
+        console.log("request", payload);
+  
+        for (let i = 0; i < payload.salesProducts.length; i++) {
+          const ele = payload.salesProducts[i];
+  
+          const product = await ProductModel.findByPk(ele.ProductId);
+          if (!product) {
+            return res.status(400).json({
+              message: "Product not found",
+            });
+          }
+  
+          if (ele.productQuantity > product.stock) {
+            return res.status(400).json({
+              message: "The product " + product.name + " has in-sufficient stock",
+            });
+          }
+  
+          salesProduct.push({
+            ...ele,
+            price: product.price,
+            SaleId: sale.id, // Assign the SaleId
+          });
+        }
+  
+        await ProductSalesModel.bulkCreate(salesProduct);
+        const totalAmount = salesProduct.reduce((sum, current) => {
+          return sum + (current.price * current.productQuantity);
+        }, 0);
+  
+        sale.totalAmount = totalAmount;
+        await sale.save();
+  
+        for (const sp of salesProduct) {
+          const product = await ProductModel.findByPk(sp.ProductId);
+          product.stock -= sp.productQuantity;
+          await product.save();
+        }
+  
+        res.status(200).json({ message: "sale created", sale });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+      }
     },
+  
 
     Update : async (req,res) => {
         try {
