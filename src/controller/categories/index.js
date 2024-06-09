@@ -6,7 +6,7 @@ const categroyController = {
 
         try {
             const getAllCategories = await CategoryModel.findAll();
-            res.status(200).json({message:"Find All", getAllCategories: getAllCategories})
+            res.status(200).json({AllCategories:"Find All", getAllCategories: getAllCategories})
         } catch (error) {
             res.status(500).json({message:"Internal server error"})
         }
@@ -20,7 +20,7 @@ const categroyController = {
             if(!getSingle){
                 return res.status(404).json({message: "Not found"})
             }
-            res.status(200).json({message:"Found Single One", getSingleCategory : getSingle})
+            res.status(200).json({SingleCategory:"Found Single One", getSingleCategory : getSingle})
         } catch (error) {
             res.status(500).json({message:"Internal server error"})
         }
@@ -41,7 +41,7 @@ const categroyController = {
                 res.status(404).json({message: "Not found"})
             }
 
-            res.status(200).json({message: "Created!", category : category})
+            res.status(200).json({CategoryCreated: "Created!", category : category})
         } catch (error) {
             console.log(error)
             res.status(500).json({message:"Internal server error"})
@@ -59,7 +59,7 @@ const categroyController = {
             if(DropCategory == -1) {
                 return res.status(404).json({message : "Not found"})
             }
-            res.status(200).json({message : "Deleted Successfully"})
+            res.status(200).json({Success : "Deleted Successfully"})
         } catch (error) {
             res.status(500).json({message:"Internal server error"})
         }
