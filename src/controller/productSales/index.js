@@ -10,7 +10,7 @@ const productSalesController = {
                 
             
             });
-            res.status(200).json({message:"Find All", AllProductSales: findAll})
+            res.status(200).json({AllProductSales:"Find All", AllProductSales: findAll})
         } catch (error) {
             res.status(500).json({message:"Internal server error"})
         }
@@ -26,9 +26,9 @@ const productSalesController = {
                 ]
             });
             if(!getSingle) {
-                return res.status(404).json({message : "Not found"})
+                return res.status(404).json({Warning : "Not found"})
             }
-            res.status(200).json({message:"Found One", singleProductSale: getSingle})
+            res.status(200).json({OneProductSale:"Found One", singleProductSale: getSingle})
         } catch (error) {
             res.status(500).json({message:"Internal server error"})
         }
@@ -43,10 +43,10 @@ const productSalesController = {
             createProducts.price = payload.price;
             await createProducts.save();
             if(createProducts == -1){
-                return res.status(404).json({message: "Not Found"})
+                return res.status(404).json({Failure: "Not Found"})
             }
           /* LOGIC :  if any of field returns null delete the table! */
-            res.status(200).json({message:"Created Successfully", productSales : createProducts})
+            res.status(200).json({Success:"Created Successfully", productSales : createProducts})
         } catch (error) {
             console.log(error)
             res.status(500).json({message:"Internal server error"})
@@ -59,7 +59,7 @@ const productSalesController = {
 
             const updateProducts = await ProductSalesModel.findByPk(id);
             if(updateProducts == -1){
-                return res.status(404).json({message: "Not found"})
+                return res.status(404).json({warning: "Not found"})
             }
             if(payload.quantity){
                 updateProducts.quantity = payload.quantity
@@ -67,7 +67,7 @@ const productSalesController = {
             if(payload.price){
                 updateProducts.price = payload.price
             }
-           res.status(200).json({message: "Updated successfully", Updation : updateProducts})
+           res.status(200).json({successFullyUpdated: "Updated successfully", Updation : updateProducts})
 
         } catch (error) {
             res.status(500).json({message:"Internal server error"})  
@@ -84,7 +84,7 @@ const productSalesController = {
             if(dropProducts == -1) {
                  return res.status(404).json({message : "Not found"})
             }
-            res.status(200).json({message : "Deleted Successfully"})
+            res.status(200).json({Drop : "Deleted Successfully"})
         } catch (error) {
             res.status(500).json({message:"Internal server error"})  
         }
