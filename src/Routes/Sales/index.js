@@ -8,7 +8,7 @@ const salesRouter = Router();
 
 salesRouter.get("/AllSales",userAuthMiddleWare,validation.Sales,salesController.getAll);
 salesRouter.get("/Sales/:id",validation.Sales, salesController.getSingle);
-salesRouter.post("/CreateSales",userAuthMiddleWare, salesController.create);
+salesRouter.post("/CreateSales", salesController.create);
 salesRouter.put("/UpdateSales/:id",validation.Sales,salesController.Update);
 salesRouter.delete("/DropSales/:id",validation.Sales, salesController.Delete);
 
