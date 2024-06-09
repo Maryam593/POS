@@ -8,7 +8,7 @@ const userAuthMiddleWare = async(req,res,next) =>{
     try {
         let token = req.headers.authorization;
         if(!token){
-            return res.status(400).json({data: "UnAuthorized Access"})
+            return res.status(400).json({Warning: "UnAuthorized Access"})
         }
         console.log(token,'token');
           //trim token initials 
@@ -24,7 +24,7 @@ const userAuthMiddleWare = async(req,res,next) =>{
         }
        })
        if(!findToken){
-        return res.status(401).json({message: "Unauthorized Access"})
+        return res.status(401).json({Warning: "Unauthorized Access"})
     }
        console.log(token,'token')
        //integrity of server
@@ -33,13 +33,13 @@ const userAuthMiddleWare = async(req,res,next) =>{
         req.user=decoded
   
         return res.status(200).json({
-          message:"User Authorized.",
+          Success:"User Authorized.",
           decoded
         })
     }
         catch(error){
             console.log(error)
-            return res.status(401).json({message: "Unauthorized"})
+            return res.status(401).json({Warning: "Unauthorized"})
         }
        
     } catch (error) {
