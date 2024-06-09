@@ -14,7 +14,7 @@ const productController = {
                    }
                 ]
             });
-            res.status(200).json({message:"Find All", AllProducts: findAll})
+            res.status(200).json({AllProducts:"Find All", AllProducts: findAll})
         } catch (error) {
             console.log(error)
             res.status(500).json({message:"Internal server error"})
@@ -29,7 +29,7 @@ const productController = {
             if(!getSingle) {
                 return res.status(404).json({message : "Not found"})
             }
-            res.status(200).json({message:"Found One", singleProduct: getSingle})
+            res.status(200).json({singleProduct:"Found One", singleProduct: getSingle})
         } catch (error) {
             console.log(error)
             res.status(500).json({message:"Internal server error"})
@@ -73,7 +73,7 @@ const productController = {
             Warning: `category on this id ${id} is not found`
         })
     }
-    res.status(200).json({ message: "Created Successfully", product: newProduct });
+    res.status(200).json({ Success: "Created Successfully", product: newProduct });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
@@ -94,7 +94,7 @@ const productController = {
             if(payload.stock){
                 updateProducts.stock = payload.stock
             }
-           res.status(200).json({message: "Updated successfully", updatedProducts : updateProducts})
+           res.status(200).json({UpdateSuccessFully: "Updated successfully", updatedProducts : updateProducts})
 
         } catch (error) {
             res.status(500).json({message:"Internal server error"})  
@@ -111,7 +111,7 @@ const productController = {
             if(deleteProducts == -1) {
                  return res.status(404).json({message : "Not found"})
             }
-            res.status(200).json({message : "Deleted Successfully"})
+            res.status(200).json({DropProduct : "Deleted Successfully"})
         } catch (error) {
             res.status(500).json({message:"Internal server error"})  
         }
