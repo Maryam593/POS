@@ -34,56 +34,6 @@ const salesController = {
     }
   },
 
-  //     Create : async (req,res) => {
-  //         try {
-  //             // Step 1: Collecting Data
-  //             let  { ProductSales } = req.body;
-
-  //             // Step 2: Calculating Total Sale Amount and Reducing Product Stock
-  //             const salesproductData = [];
-  //             let totalAmount = 0;
-
-  //            // Step 1: Ensure ProductSales is an array and has valid items
-  // if (!Array.isArray(ProductSales) || ProductSales.length === 0) {
-  //     return res.status(400).json({ error: "ProductSales is empty or not an array" });
-  //   }
-
-  //             for (const item of ProductSales) {
-  //               if (!item) {
-  //                 console.log("Null", item);
-  //                 continue; // Skip invalid items
-  //               }
-
-  //               const product = await ProductModel.findByPk(item.id);
-
-  //               if (!product) {
-  //                 return res.status(400).json({ warning: `Product with ID ${item.id} not found` });
-  //               }
-
-  //               if (item.quantity > product.stock) {
-  //                 return res.status(400).json({ message: `Insufficient stock for product with ID ${item.id}` });
-  //               }
-
-  //               totalAmount = totalAmount + (item.rate * item.quantity);
-
-  //               product.stock = product.stock - item.quantity; // Reduce stock
-  //               await product.save(); // Save updated product
-
-  //               salesproductData.push({ ...item, Sales: Sales.id }); // Add to sales product data
-  //             }
-
-  //             // Step 3: Bulk Create Sales Product Records
-  //             await ProductSalesModel.bulkCreate(salesproductData);
-
-  //             // Step 4: Respond with Success Message and Data
-  //             res.status(200).json({ message: "Sale created successfully", totalAmount, salesproductData });
-  //           } catch (error) {
-  //             // Step 5: Handle Errors
-  //             console.log(error);
-  //             res.status(500).json({ error: "Internal Server Error" });
-  //           }
-
-  //     },
   create: async (req, res) => {
     try {
      
