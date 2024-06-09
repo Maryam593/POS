@@ -1,10 +1,15 @@
 import ProductSalesModel from "../../models/productSales/index.js";
+import ProductModel from "../../models/products/index.js";
+import SalesModel from "../../models/sales/index.js";
 
 
 const productSalesController = {
     getAll : async (req,res) => {
         try {
-            const findAll = await ProductSalesModel.findAll();
+            const findAll = await ProductSalesModel.findAll({
+                
+            
+            });
             res.status(200).json({message:"Find All", AllProductSales: findAll})
         } catch (error) {
             res.status(500).json({message:"Internal server error"})
@@ -13,7 +18,13 @@ const productSalesController = {
 
     getSingle : async (req,res) => {
         try {
-            const getSingle = await ProductSalesModel.findByPk(id);
+            const getSingle = await ProductSalesModel.findByPk(id,{
+                include : [
+                    {
+                        model : SalesModel, include : [ProductModel]
+                    }
+                ]
+            });
             if(!getSingle) {
                 return res.status(404).json({message : "Not found"})
             }
