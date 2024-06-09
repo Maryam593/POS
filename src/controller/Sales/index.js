@@ -27,7 +27,7 @@ const salesController = {
       if (!getSingle) {
         return res.status(404).json({ AllSales: "Not found" });
       }
-      res.status(200).json({ message: "Found One", Sale: getSingle });
+      res.status(200).json({ SingleSale: "Found One", Sale: getSingle });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Internal server error" });
@@ -147,7 +147,7 @@ const salesController = {
         },
       });
       if (deleteSales == -1) {
-        return res.status(404).json({ message: "Not found" });
+        return res.status(404).json({ warning: "Not found" });
       }
       res.status(200).json({ DropSale: "Deleted Successfully" });
     } catch (error) {
