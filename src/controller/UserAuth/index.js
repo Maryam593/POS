@@ -16,7 +16,7 @@ const userAuthenticationController = {
                 }
             })
             if(userCheck){
-                return res.status(400).json({message: "Already exist"})
+                return res.status(400).json({Information: "Already exist"})
             }
           //hashing ... SHA 256
             const hPassword = await hash(payload.password, 10);
@@ -25,10 +25,10 @@ const userAuthenticationController = {
                 ...payload,
                 password : hPassword
             })
-            return res.status(201).json({message:"Registered successfully", data: data})
+            return res.status(201).json({Congratulations:"Registered successfully", data: data})
         } catch (error) {
             console.log(error);
-            res.status(500).json({message: "Internal server error"})
+            res.status(500).json({Error: "Internal server error"})
         }
     },
     
@@ -41,12 +41,12 @@ const userAuthenticationController = {
                 }
             })
             if(!userCheck){
-                return res.status(400).json({message: "Invalid Confirmations"})
+                return res.status(400).json({warning: "Invalid Confirmations"})
             }
             //checkPassword 
             const isValid = await compare(payload.password, userCheck.password)
             if(!isValid){
-                return res.status(400).json({message: "Invalid Confirmations"})
+                return res.status(400).json({warning: "Invalid Confirmations"})
             }
             //token Data
             const tokenData = {
@@ -70,7 +70,7 @@ const userAuthenticationController = {
             res.status(200).json({Information: tokenData,token});
         } catch (error) {
             console.log(error)
-            res.status(500).json({message: "Internal server error"})  
+            res.status(500).json({Error: "Internal server error"})  
         }
     }
 }
